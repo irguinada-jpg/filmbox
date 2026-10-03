@@ -1,87 +1,1510 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FilmBox — نموذج تجريبي</title>
-<style>
-*{box-sizing:border-box}body{margin:0;background:#0b0d12;color:#f5f7fa;font-family:Arial,sans-serif}
-header{position:sticky;top:0;z-index:5;background:#11141b;padding:14px 18px;border-bottom:1px solid #242936}
-nav{max-width:1100px;margin:auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.logo{font-size:24px;font-weight:800;margin-left:auto}.logo span{color:#ff3158}
-input{background:#1b202a;border:1px solid #303746;color:white;border-radius:12px;padding:11px 14px;flex:1;min-width:180px}
-button{border:0;border-radius:11px;padding:10px 15px;background:#ff3158;color:white;font-weight:700;cursor:pointer}
-main{max-width:1100px;margin:25px auto;padding:0 18px}
-.hero{background:linear-gradient(110deg,#191d27,#351322);padding:30px;border-radius:20px;margin-bottom:25px}
-.hero h1{margin:0 0 8px;font-size:32px}.hero p{color:#c4cad5}
-.categories{display:flex;gap:8px;overflow:auto;margin:15px 0 25px}
-.cat{background:#191e28;border:1px solid #2b3240;color:#ddd;white-space:nowrap}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
-.card{background:#141821;border:1px solid #242b38;border-radius:16px;overflow:hidden}
-.thumb{height:250px;display:flex;align-items:flex-end;padding:12px;background:linear-gradient(145deg,#26354d,#70233a)}
-.card:nth-child(2) .thumb{background:linear-gradient(145deg,#183f45,#8a5a24)}
-.card:nth-child(3) .thumb{background:linear-gradient(145deg,#38245a,#152f58)}
-.card:nth-child(4) .thumb{background:linear-gradient(145deg,#283f27,#6a2934)}
-.card:nth-child(5) .thumb{background:linear-gradient(145deg,#3b3020,#253e55)}
-.badge{background:#0009;padding:6px 9px;border-radius:8px}
-.info{padding:13px}.info h3{margin:0 0 7px;font-size:17px}.info p{margin:0;color:#9da5b4;font-size:13px}
-footer{text-align:center;color:#747c8a;padding:35px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>FilmBox - أفلام ومسلسلات</title>
+
+  <meta name="description" content="FilmBox - منصة أفلام ومسلسلات بتصميم عصري">
+  <meta name="theme-color" content="#09090b">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #08090d;
+      --bg2: #101118;
+      --card: #151720;
+      --card2: #1b1e29;
+      --text: #ffffff;
+      --muted: #a5a8b3;
+      --accent: #ff174f;
+      --accent2: #8b1cff;
+      --border: #292d38;
+      --gold: #ffc107;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(139, 28, 255, .12), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(255, 23, 79, .10), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ================= HEADER ================= */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(8, 9, 13, .88);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      white-space: nowrap;
+    }
+
+    .logo span {
+      background: linear-gradient(90deg, #ff174f, #a81cff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .nav-links button {
+      background: transparent;
+      color: #d9dbe2;
+      border: 0;
+      padding: 10px 13px;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    .nav-links button:hover,
+    .nav-links button.active {
+      background: rgba(255,255,255,.08);
+      color: white;
+    }
+
+    .search-box {
+      margin-right: auto;
+      position: relative;
+      width: 260px;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: #151720;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 11px 42px 11px 14px;
+      color: white;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .search-box input:focus {
+      border-color: #6f7380;
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      max-width: 1200px;
+      margin: 25px auto 0;
+      padding: 20px;
+    }
+
+    .hero-box {
+      min-height: 430px;
+      border-radius: 25px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 55px;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(5,5,8,.98) 0%,
+          rgba(5,5,8,.88) 42%,
+          rgba(5,5,8,.35) 100%
+        ),
+        linear-gradient(
+          135deg,
+          #351050,
+          #100d1b 48%,
+          #551020
+        );
+      border: 1px solid #292c37;
+    }
+
+    .hero-content {
+      max-width: 650px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: linear-gradient(90deg, #ff174f, #9d1cff);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 72px);
+      line-height: .98;
+      letter-spacing: -3px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, #ff416c, #a855f7);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: #c4c6ce;
+      line-height: 1.8;
+      font-size: 16px;
+      max-width: 570px;
+      margin-bottom: 25px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 13px 21px;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(90deg, #ff174f, #a51cff);
+      box-shadow: 0 10px 30px rgba(255,23,79,.20);
+    }
+
+    .btn-secondary {
+      color: white;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    /* ================= MAIN ================= */
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 15px 20px 70px;
+    }
+
+    .section {
+      margin-top: 40px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      gap: 15px;
+    }
+
+    .section-title {
+      font-size: 25px;
+      font-weight: 900;
+    }
+
+    .section-title span {
+      color: #ff2859;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ================= CATEGORIES ================= */
+
+    .categories {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 7px;
+      scrollbar-width: none;
+    }
+
+    .categories::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category {
+      white-space: nowrap;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: #ddd;
+      padding: 10px 17px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+
+    .category:hover,
+    .category.active {
+      background: linear-gradient(90deg, #ff174f, #8b1cff);
+      border-color: transparent;
+      color: white;
+    }
+
+    /* ================= GRID ================= */
+
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .movie-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: .25s ease;
+      cursor: pointer;
+    }
+
+    .movie-card:hover {
+      transform: translateY(-6px);
+      border-color: #474c5c;
+      box-shadow: 0 15px 35px rgba(0,0,0,.35);
+    }
+
+    .poster {
+      height: 285px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 14px;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,.25), transparent 15%),
+        linear-gradient(145deg, var(--c1), var(--c2));
+    }
+
+    .poster::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          transparent 40%,
+          rgba(0,0,0,.75) 100%
+        );
+    }
+
+    .poster-title {
+      position: relative;
+      z-index: 2;
+      font-size: 25px;
+      font-weight: 900;
+      line-height: 1;
+      text-shadow: 0 3px 12px rgba(0,0,0,.7);
+    }
+
+    .movie-rating {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 5;
+      background: rgba(0,0,0,.7);
+      border: 1px solid rgba(255,255,255,.15);
+      padding: 5px 8px;
+      border-radius: 8px;
+      color: #ffd54a;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .movie-info {
+      padding: 13px;
+    }
+
+    .movie-info h3 {
+      font-size: 15px;
+      margin-bottom: 7px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .movie-meta {
+      color: var(--muted);
+      font-size: 12px;
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ================= EMPTY ================= */
+
+    .empty {
+      display: none;
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--muted);
+      border: 1px dashed var(--border);
+      border-radius: 15px;
+    }
+
+    /* ================= MODAL ================= */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: min(800px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #11131a;
+      border: 1px solid #303441;
+      border-radius: 22px;
+      position: relative;
+      box-shadow: 0 30px 80px rgba(0,0,0,.6);
+    }
+
+    .modal-top {
+      height: 260px;
+      position: relative;
+      background:
+        linear-gradient(0deg, #11131a, transparent),
+        linear-gradient(135deg, #451051, #151321, #64152e);
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      z-index: 5;
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(0,0,0,.65);
+      color: white;
+      font-size: 20px;
+    }
+
+    .modal-content {
+      padding: 25px;
+      margin-top: -50px;
+      position: relative;
+    }
+
+    .modal-content h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .modal-meta {
+      color: #aaa;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      font-size: 13px;
+    }
+
+    .modal-description {
+      color: #c4c6ce;
+      line-height: 1.8;
+      margin-bottom: 22px;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 35px 20px;
+      text-align: center;
+      color: #858894;
+      font-size: 13px;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 1000px) {
+      .movie-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 760px) {
+
+      .nav {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      .nav-links {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      .search-box {
+        width: 170px;
+      }
+
+      .hero-box {
+        min-height: 500px;
+        padding: 30px 22px;
+        align-items: flex-end;
+      }
+
+      .hero h1 {
+        font-size: 45px;
+        letter-spacing: -2px;
+      }
+
+      .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .poster {
+        height: 245px;
+      }
+
+      .section-title {
+        font-size: 21px;
+      }
+    }
+
+    @media (max-width: 430px) {
+
+      .nav {
+        padding: 12px;
+      }
+
+      .search-box {
+        flex: 1;
+        width: auto;
+      }
+
+      .hero {
+        padding: 10px;
+      }
+
+      .hero-box {
+        border-radius: 18px;
+        min-height: 480px;
+      }
+
+      main {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .poster {
+        height: 225px;
+      }
+
+      .poster-title {
+        font-size: 20px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<header><nav>
-<div class="logo"><span>Film</span>Box</div>
-<input id="search" placeholder="ابحث عن فيديو..." oninput="filterCards()">
-<button onclick="alert('هنا غادي تكون صفحة رفع الفيديو')">+ رفع فيديو</button>
-</nav></header>
 
-<main>
-<section class="hero">
-<h1>شاهد، اكتشف، واستمتع</h1>
-<p>واجهة تجريبية لمنصة فيديو قانونية. الفيديوهات هنا تجريبية ويمكن تبديلها بمحتواك المرخّص.</p>
-<button onclick="document.getElementById('videos').scrollIntoView({behavior:'smooth'})">شاهد الآن</button>
-</section>
+  <!-- ================= HEADER ================= -->
 
-<div class="categories">
-<button class="cat" onclick="showAll()">الكل</button>
-<button class="cat" onclick="filterCategory('تقنية')">تقنية</button>
-<button class="cat" onclick="filterCategory('رياضة')">رياضة</button>
-<button class="cat" onclick="filterCategory('سيارات')">سيارات</button>
-<button class="cat" onclick="filterCategory('تعليم')">تعليم</button>
-</div>
+  <header>
+    <nav class="nav">
 
-<h2>الفيديوهات الجاهزة</h2>
-<section id="videos" class="grid">
-<article class="card" data-title="أحدث تقنيات الذكاء الاصطناعي" data-cat="تقنية">
-<div class="thumb"><span class="badge">▶ 12:30</span></div>
-<div class="info"><h3>أحدث تقنيات الذكاء الاصطناعي</h3><p>تقنية • 12K مشاهدة</p></div></article>
-<article class="card" data-title="نصائح للتمرين" data-cat="رياضة">
-<div class="thumb"><span class="badge">▶ 08:45</span></div>
-<div class="info"><h3>نصائح للتمرين</h3><p>رياضة • 8.4K مشاهدة</p></div></article>
-<article class="card" data-title="جولة في سيارة رياضية" data-cat="سيارات">
-<div class="thumb"><span class="badge">▶ 10:15</span></div>
-<div class="info"><h3>جولة في سيارة رياضية</h3><p>سيارات • 21K مشاهدة</p></div></article>
-<article class="card" data-title="تعلم مهارة جديدة" data-cat="تعليم">
-<div class="thumb"><span class="badge">▶ 15:20</span></div>
-<div class="info"><h3>تعلم مهارة جديدة</h3><p>تعليم • 5.1K مشاهدة</p></div></article>
-<article class="card" data-title="أفضل أفكار للمحتوى" data-cat="تقنية">
-<div class="thumb"><span class="badge">▶ 06:40</span></div>
-<div class="info"><h3>أفضل أفكار للمحتوى</h3><p>تقنية • 14K مشاهدة</p></div></article>
-</section>
-</main>
-<footer>FilmBox — نموذج واجهة فقط © 2026</footer>
+      <a class="logo" href="#">
+        Film<span>Box</span>
+      </a>
 
-<script>
-function filterCards(){
- const q=document.getElementById('search').value.toLowerCase();
- document.querySelectorAll('.card').forEach(c=>{
-   c.style.display=c.dataset.title.toLowerCase().includes(q)?'block':'none';
- });
-}
-function filterCategory(cat){
- document.querySelectorAll('.card').forEach(c=>c.style.display=c.dataset.cat===cat?'block':'none');
-}
-function showAll(){document.querySelectorAll('.card').forEach(c=>c.style.display='block')}
-</script>
+      <div class="nav-links">
+        <button class="active" onclick="showSection('home')">
+          الرئيسية
+        </button>
+
+        <button onclick="showSection('movies')">
+          الأفلام
+        </button>
+
+        <button onclick="showSection('series')">
+          المسلسلات
+        </button>
+
+        <button onclick="scrollToSection('categories')">
+          التصنيفات
+        </button>
+      </div>
+
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="ابحث عن فيلم..."
+          oninput="searchMovies()"
+        >
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- ================= HERO ================= -->
+
+  <section class="hero" id="home">
+
+    <div class="hero-box">
+
+      <div class="hero-content">
+
+        <div class="badge">
+          FILMBOX ORIGINAL
+        </div>
+
+        <h1>
+          عالمك من<br>
+          <span>الأفلام</span> يبدأ هنا
+        </h1>
+
+        <p>
+          اكتشف أفلاماً ومسلسلات جديدة بتصميم سريع وعصري.
+          اختار العمل اللي عجبك وشوف معلوماته وتقييمه.
+        </p>
+
+        <div class="hero-buttons">
+
+          <button
+            class="btn btn-primary"
+            onclick="openMovie(0)"
+          >
+            ▶ ابدأ المشاهدة
+          </button>
+
+          <button
+            class="btn btn-secondary"
+            onclick="scrollToSection('movies')"
+          >
+            استكشف الأفلام
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= MAIN ================= -->
+
+  <main>
+
+
+    <!-- TRENDING -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <div>
+          <div class="section-title">
+            🔥 الأكثر <span>مشاهدة</span>
+          </div>
+
+          <div class="section-subtitle">
+            اختيارات هذا الأسبوع
+          </div>
+        </div>
+
+      </div>
+
+      <div
+        class="movie-grid"
+        id="trendingGrid"
+      ></div>
+
+    </section>
+
+
+    <!-- CATEGORIES -->
+
+    <section
+      class="section"
+      id="categories"
+    >
+
+      <div class="section-header">
+
+        <div class="section-title">
+          🎭 التصنيفات
+        </div>
+
+      </div>
+
+      <div class="categories">
+
+        <button
+          class="category active"
+          onclick="filterCategory('all', this)"
+        >
+          الكل
+        </button>
+
+        <button
+          class="category"
+          onclick="filterCategory('Action', this)"
+        >
+          أكشن
+        </button>
+
+        <button
+          class="category"
+          onclick="filterCategory('Comedy', this)"
+        >
+          كوميديا
+        </button>
+
+        <button
+          class="category"
+          onclick="filterCategory('Drama', this)"
+        >
+          دراما
+        </button>
+
+        <button
+          class="category"
+          onclick="filterCategory('Sci-Fi', this)"
+        >
+          خيال علمي
+        </button>
+
+        <button
+          class="category"
+          onclick="filterCategory('Horror', this)"
+        >
+          رعب
+        </button>
+
+        <button
+          class="category"
+          onclick="filterCategory('Adventure', this)"
+        >
+          مغامرة
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- MOVIES -->
+
+    <section
+      class="section"
+      id="movies"
+    >
+
+      <div class="section-header">
+
+        <div>
+          <div class="section-title">
+            🎬 أحدث <span>الأفلام</span>
+          </div>
+
+          <div class="section-subtitle">
+            مجموعة تجريبية قابلة للتطوير
+          </div>
+        </div>
+
+      </div>
+
+      <div
+        class="movie-grid"
+        id="movieGrid"
+      ></div>
+
+      <div
+        class="empty"
+        id="emptyState"
+      >
+        <div style="font-size:40px;margin-bottom:10px;">
+          🔎
+        </div>
+
+        <h3 style="color:white;margin-bottom:8px;">
+          ما لقيناش النتائج
+        </h3>
+
+        <p>
+          جرّب كلمة بحث أخرى.
+        </p>
+      </div>
+
+    </section>
+
+
+    <!-- SERIES -->
+
+    <section
+      class="section"
+      id="series"
+    >
+
+      <div class="section-header">
+
+        <div>
+          <div class="section-title">
+            📺 مسلسلات <span>مختارة</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="movie-grid">
+
+        <div
+          class="movie-card"
+          onclick="openMovieByName('Night City')"
+        >
+
+          <div
+            class="poster"
+            style="--c1:#172554;--c2:#581c87;"
+          >
+            <span class="movie-rating">
+              ★ 8.6
+            </span>
+
+            <div class="poster-title">
+              NIGHT<br>CITY
+            </div>
+          </div>
+
+          <div class="movie-info">
+            <h3>Night City</h3>
+
+            <div class="movie-meta">
+              <span>2026</span>
+              <span>•</span>
+              <span>Series</span>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div
+          class="movie-card"
+          onclick="openMovieByName('The Signal')"
+        >
+
+          <div
+            class="poster"
+            style="--c1:#164e63;--c2:#0f172a;"
+          >
+            <span class="movie-rating">
+              ★ 8.2
+            </span>
+
+            <div class="poster-title">
+              THE<br>SIGNAL
+            </div>
+          </div>
+
+          <div class="movie-info">
+            <h3>The Signal</h3>
+
+            <div class="movie-meta">
+              <span>2026</span>
+              <span>•</span>
+              <span>Series</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= MODAL ================= -->
+
+  <div
+    class="modal"
+    id="movieModal"
+    onclick="closeOutside(event)"
+  >
+
+    <div class="modal-box">
+
+      <div
+        class="modal-top"
+        id="modalPoster"
+      >
+
+        <button
+          class="close"
+          onclick="closeModal()"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div class="modal-content">
+
+        <h2 id="modalTitle">
+          اسم الفيلم
+        </h2>
+
+        <div
+          class="modal-meta"
+          id="modalMeta"
+        ></div>
+
+        <p
+          class="modal-description"
+          id="modalDescription"
+        ></p>
+
+        <div class="hero-buttons">
+
+          <button
+            class="btn btn-primary"
+            onclick="watchMovie()"
+          >
+            ▶ مشاهدة
+          </button>
+
+          <button
+            class="btn btn-secondary"
+            onclick="closeModal()"
+          >
+            إغلاق
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+
+    <strong>FilmBox</strong>
+
+    <br><br>
+
+    © 2026 FilmBox — جميع الحقوق محفوظة
+
+    <br>
+
+    <span>
+      هذا الموقع نموذج تجريبي لتطوير واجهة منصة أفلام.
+    </span>
+
+  </footer>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+
+    const movies = [
+
+      {
+        title: "Shadow Force",
+        year: "2026",
+        genre: "Action",
+        rating: "8.7",
+        type: "Movie",
+        color1: "#450a0a",
+        color2: "#991b1b",
+        description:
+          "فيلم أكشن تجريبي حول مجموعة من الأبطال الذين يدخلون في مهمة خطيرة لإنقاذ مدينة مهددة."
+      },
+
+      {
+        title: "Neon Future",
+        year: "2026",
+        genre: "Sci-Fi",
+        rating: "8.9",
+        type: "Movie",
+        color1: "#312e81",
+        color2: "#c026d3",
+        description:
+          "في مستقبل مليء بالتكنولوجيا، يكتشف شاب سراً يمكن أن يغير العالم بالكامل."
+      },
+
+      {
+        title: "Last Mission",
+        year: "2025",
+        genre: "Action",
+        rating: "8.3",
+        type: "Movie",
+        color1: "#172554",
+        color2: "#1e40af",
+        description:
+          "مهمة أخيرة تجمع فريقاً من المتخصصين في مغامرة مليئة بالمفاجآت."
+      },
+
+      {
+        title: "Dark House",
+        year: "2025",
+        genre: "Horror",
+        rating: "7.9",
+        type: "Movie",
+        color1: "#171717",
+        color2: "#581c87",
+        description:
+          "عائلة تنتقل إلى منزل قديم وتبدأ في اكتشاف أسرار غريبة مرتبطة بالمكان."
+      },
+
+      {
+        title: "Crazy Weekend",
+        year: "2026",
+        genre: "Comedy",
+        rating: "8.1",
+        type: "Movie",
+        color1: "#713f12",
+        color2: "#f97316",
+        description:
+          "ثلاثة أصدقاء يدخلون في عطلة نهاية أسبوع مليئة بالمواقف الكوميدية غير المتوقعة."
+      },
+
+      {
+        title: "The Last Road",
+        year: "2025",
+        genre: "Drama",
+        rating: "8.5",
+        type: "Movie",
+        color1: "#292524",
+        color2: "#9a3412",
+        description:
+          "رحلة إنسانية مليئة بالقرارات الصعبة واللحظات المؤثرة."
+      },
+
+      {
+        title: "Lost Island",
+        year: "2026",
+        genre: "Adventure",
+        rating: "8.4",
+        type: "Movie",
+        color1: "#064e3b",
+        color2: "#0891b2",
+        description:
+          "مجموعة من المستكشفين يجدون جزيرة مجهولة ويبدأون رحلة مليئة بالمغامرات."
+      },
+
+      {
+        title: "Zero Hour",
+        year: "2026",
+        genre: "Action",
+        rating: "8.8",
+        type: "Movie",
+        color1: "#18181b",
+        color2: "#be123c",
+        description:
+          "الوقت ينفد أمام فريق متخصص لمنع كارثة كبيرة."
+      },
+
+      {
+        title: "Night City",
+        year: "2026",
+        genre: "Drama",
+        rating: "8.6",
+        type: "Series",
+        color1: "#172554",
+        color2: "#581c87",
+        description:
+          "مسلسل درامي تجري أحداثه داخل مدينة لا تنام."
+      },
+
+      {
+        title: "The Signal",
+        year: "2026",
+        genre: "Sci-Fi",
+        rating: "8.2",
+        type: "Series",
+        color1: "#164e63",
+        color2: "#0f172a",
+        description:
+          "إشارة غامضة تصل إلى الأرض وتفتح باباً لأسئلة أكبر من المتوقع."
+      }
+
+    ];
+
+
+    let currentMovies = [...movies];
+
+
+    /* ================= CREATE CARD ================= */
+
+    function createCard(movie, index) {
+
+      return `
+
+        <article
+          class="movie-card"
+          onclick="openMovie(${index})"
+        >
+
+          <div
+            class="poster"
+            style="
+              --c1:${movie.color1};
+              --c2:${movie.color2};
+            "
+          >
+
+            <span class="movie-rating">
+              ★ ${movie.rating}
+            </span>
+
+            <div class="poster-title">
+              ${movie.title}
+            </div>
+
+          </div>
+
+          <div class="movie-info">
+
+            <h3>
+              ${movie.title}
+            </h3>
+
+            <div class="movie-meta">
+
+              <span>${movie.year}</span>
+
+              <span>•</span>
+
+              <span>${movie.genre}</span>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      `;
+
+    }
+
+
+    /* ================= RENDER ================= */
+
+    function renderMovies(list = movies) {
+
+      const grid =
+        document.getElementById("movieGrid");
+
+      const empty =
+        document.getElementById("emptyState");
+
+      grid.innerHTML = "";
+
+      if (!list.length) {
+
+        empty.style.display = "block";
+
+        return;
+
+      }
+
+      empty.style.display = "none";
+
+      list.forEach((movie) => {
+
+        const originalIndex =
+          movies.indexOf(movie);
+
+        grid.innerHTML +=
+          createCard(movie, originalIndex);
+
+      });
+
+    }
+
+
+    function renderTrending() {
+
+      const grid =
+        document.getElementById("trendingGrid");
+
+      const trending =
+        movies
+          .filter(m => m.type === "Movie")
+          .sort((a,b) =>
+            Number(b.rating) - Number(a.rating)
+          )
+          .slice(0,5);
+
+      grid.innerHTML = "";
+
+      trending.forEach(movie => {
+
+        const index =
+          movies.indexOf(movie);
+
+        grid.innerHTML +=
+          createCard(movie, index);
+
+      });
+
+    }
+
+
+    /* ================= SEARCH ================= */
+
+    function searchMovies() {
+
+      const query =
+        document
+          .getElementById("searchInput")
+          .value
+          .trim()
+          .toLowerCase();
+
+      const filtered =
+        movies.filter(movie =>
+
+          movie.title
+            .toLowerCase()
+            .includes(query)
+
+          ||
+
+          movie.genre
+            .toLowerCase()
+            .includes(query)
+
+        );
+
+      renderMovies(filtered);
+
+      if (query) {
+
+        document
+          .getElementById("movies")
+          .scrollIntoView({
+            behavior: "smooth"
+          });
+
+      }
+
+    }
+
+
+    /* ================= CATEGORY ================= */
+
+    function filterCategory(category, button) {
+
+      document
+        .querySelectorAll(".category")
+        .forEach(btn =>
+          btn.classList.remove("active")
+        );
+
+      button.classList.add("active");
+
+      if (category === "all") {
+
+        currentMovies = [...movies];
+
+      } else {
+
+        currentMovies =
+          movies.filter(movie =>
+            movie.genre === category
+          );
+
+      }
+
+      renderMovies(currentMovies);
+
+      document
+        .getElementById("movies")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
+
+    }
+
+
+    /* ================= MODAL ================= */
+
+    function openMovie(index) {
+
+      const movie =
+        movies[index];
+
+      if (!movie) return;
+
+      document
+        .getElementById("modalTitle")
+        .textContent =
+        movie.title;
+
+      document
+        .getElementById("modalMeta")
+        .innerHTML = `
+
+          <span>📅 ${movie.year}</span>
+
+          <span>•</span>
+
+          <span>🎭 ${movie.genre}</span>
+
+          <span>•</span>
+
+          <span>⭐ ${movie.rating}</span>
+
+          <span>•</span>
+
+          <span>${movie.type}</span>
+
+        `;
+
+      document
+        .getElementById("modalDescription")
+        .textContent =
+        movie.description;
+
+      document
+        .getElementById("modalPoster")
+        .style.background = `
+
+          linear-gradient(
+            0deg,
+            #11131a,
+            transparent
+          ),
+
+          linear-gradient(
+            135deg,
+            ${movie.color1},
+            ${movie.color2}
+          )
+
+        `;
+
+      document
+        .getElementById("movieModal")
+        .classList.add("show");
+
+      document.body.style.overflow = "hidden";
+
+    }
+
+
+    function openMovieByName(name) {
+
+      const index =
+        movies.findIndex(
+          movie => movie.title === name
+        );
+
+      if (index !== -1) {
+
+        openMovie(index);
+
+      }
+
+    }
+
+
+    function closeModal() {
+
+      document
+        .getElementById("movieModal")
+        .classList.remove("show");
+
+      document.body.style.overflow = "";
+
+    }
+
+
+    function closeOutside(event) {
+
+      if (
+        event.target ===
+        document.getElementById("movieModal")
+      ) {
+
+        closeModal();
+
+      }
+
+    }
+
+
+    /* ================= WATCH ================= */
+
+    function watchMovie() {
+
+      alert(
+        "🎬 المشغل التجريبي\n\n" +
+        "هنا نقدروا نربطو لاحقاً مشغل فيديو قانوني أو Trailer."
+      );
+
+    }
+
+
+    /* ================= NAVIGATION ================= */
+
+    function scrollToSection(id) {
+
+      document
+        .getElementById(id)
+        .scrollIntoView({
+          behavior: "smooth"
+        });
+
+    }
+
+
+    function showSection(section) {
+
+      if (section === "home") {
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+      }
+
+      if (section === "movies") {
+
+        scrollToSection("movies");
+
+      }
+
+      if (section === "series") {
+
+        scrollToSection("series");
+
+      }
+
+    }
+
+
+    /* ================= ESC KEY ================= */
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key === "Escape") {
+
+          closeModal();
+
+        }
+
+      }
+    );
+
+
+    /* ================= START ================= */
+
+    renderTrending();
+    renderMovies();
+
+  </script>
+
 </body>
 </html>
