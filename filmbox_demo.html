@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FilmBox — نموذج تجريبي</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b0d12;color:#f5f7fa;font-family:Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#11141b;padding:14px 18px;border-bottom:1px solid #242936}
+nav{max-width:1100px;margin:auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-size:24px;font-weight:800;margin-left:auto}.logo span{color:#ff3158}
+input{background:#1b202a;border:1px solid #303746;color:white;border-radius:12px;padding:11px 14px;flex:1;min-width:180px}
+button{border:0;border-radius:11px;padding:10px 15px;background:#ff3158;color:white;font-weight:700;cursor:pointer}
+main{max-width:1100px;margin:25px auto;padding:0 18px}
+.hero{background:linear-gradient(110deg,#191d27,#351322);padding:30px;border-radius:20px;margin-bottom:25px}
+.hero h1{margin:0 0 8px;font-size:32px}.hero p{color:#c4cad5}
+.categories{display:flex;gap:8px;overflow:auto;margin:15px 0 25px}
+.cat{background:#191e28;border:1px solid #2b3240;color:#ddd;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
+.card{background:#141821;border:1px solid #242b38;border-radius:16px;overflow:hidden}
+.thumb{height:250px;display:flex;align-items:flex-end;padding:12px;background:linear-gradient(145deg,#26354d,#70233a)}
+.card:nth-child(2) .thumb{background:linear-gradient(145deg,#183f45,#8a5a24)}
+.card:nth-child(3) .thumb{background:linear-gradient(145deg,#38245a,#152f58)}
+.card:nth-child(4) .thumb{background:linear-gradient(145deg,#283f27,#6a2934)}
+.card:nth-child(5) .thumb{background:linear-gradient(145deg,#3b3020,#253e55)}
+.badge{background:#0009;padding:6px 9px;border-radius:8px}
+.info{padding:13px}.info h3{margin:0 0 7px;font-size:17px}.info p{margin:0;color:#9da5b4;font-size:13px}
+footer{text-align:center;color:#747c8a;padding:35px}
+</style>
+</head>
+<body>
+<header><nav>
+<div class="logo"><span>Film</span>Box</div>
+<input id="search" placeholder="ابحث عن فيديو..." oninput="filterCards()">
+<button onclick="alert('هنا غادي تكون صفحة رفع الفيديو')">+ رفع فيديو</button>
+</nav></header>
+
+<main>
+<section class="hero">
+<h1>شاهد، اكتشف، واستمتع</h1>
+<p>واجهة تجريبية لمنصة فيديو قانونية. الفيديوهات هنا تجريبية ويمكن تبديلها بمحتواك المرخّص.</p>
+<button onclick="document.getElementById('videos').scrollIntoView({behavior:'smooth'})">شاهد الآن</button>
+</section>
+
+<div class="categories">
+<button class="cat" onclick="showAll()">الكل</button>
+<button class="cat" onclick="filterCategory('تقنية')">تقنية</button>
+<button class="cat" onclick="filterCategory('رياضة')">رياضة</button>
+<button class="cat" onclick="filterCategory('سيارات')">سيارات</button>
+<button class="cat" onclick="filterCategory('تعليم')">تعليم</button>
+</div>
+
+<h2>الفيديوهات الجاهزة</h2>
+<section id="videos" class="grid">
+<article class="card" data-title="أحدث تقنيات الذكاء الاصطناعي" data-cat="تقنية">
+<div class="thumb"><span class="badge">▶ 12:30</span></div>
+<div class="info"><h3>أحدث تقنيات الذكاء الاصطناعي</h3><p>تقنية • 12K مشاهدة</p></div></article>
+<article class="card" data-title="نصائح للتمرين" data-cat="رياضة">
+<div class="thumb"><span class="badge">▶ 08:45</span></div>
+<div class="info"><h3>نصائح للتمرين</h3><p>رياضة • 8.4K مشاهدة</p></div></article>
+<article class="card" data-title="جولة في سيارة رياضية" data-cat="سيارات">
+<div class="thumb"><span class="badge">▶ 10:15</span></div>
+<div class="info"><h3>جولة في سيارة رياضية</h3><p>سيارات • 21K مشاهدة</p></div></article>
+<article class="card" data-title="تعلم مهارة جديدة" data-cat="تعليم">
+<div class="thumb"><span class="badge">▶ 15:20</span></div>
+<div class="info"><h3>تعلم مهارة جديدة</h3><p>تعليم • 5.1K مشاهدة</p></div></article>
+<article class="card" data-title="أفضل أفكار للمحتوى" data-cat="تقنية">
+<div class="thumb"><span class="badge">▶ 06:40</span></div>
+<div class="info"><h3>أفضل أفكار للمحتوى</h3><p>تقنية • 14K مشاهدة</p></div></article>
+</section>
+</main>
+<footer>FilmBox — نموذج واجهة فقط © 2026</footer>
+
+<script>
+function filterCards(){
+ const q=document.getElementById('search').value.toLowerCase();
+ document.querySelectorAll('.card').forEach(c=>{
+   c.style.display=c.dataset.title.toLowerCase().includes(q)?'block':'none';
+ });
+}
+function filterCategory(cat){
+ document.querySelectorAll('.card').forEach(c=>c.style.display=c.dataset.cat===cat?'block':'none');
+}
+function showAll(){document.querySelectorAll('.card').forEach(c=>c.style.display='block')}
+</script>
+</body>
+</html>
